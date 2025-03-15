@@ -62,7 +62,7 @@ export async function fetchDepartments() {
     return await response.json();
   } catch (error) {
     console.error(error);
-    return [];
+    return [];``
   }
 }
 
