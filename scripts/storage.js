@@ -6,7 +6,7 @@ const STORAGE_KEYS = {
   // You can add more keys for other domain-specific data here
 };
 
-export const storageService = {
+const storageService = {
   // Filters
   getFilters() {
     try {

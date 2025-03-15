@@ -1,7 +1,7 @@
 const API_URL = "https://momentum.redberryinternship.ge/api";
 const token = "9e6ff624-9eaf-4164-a4f4-2f0b0b1d1704";
 
-export async function fetchTasks() {
+async function fetchTasks() {
   try {
     const response = await fetch(`${API_URL}/tasks`, {
       headers: { Authorization: `Bearer ${token}` },
@@ -14,7 +14,7 @@ export async function fetchTasks() {
   }
 }
 
-export async function fetchSingleTask(taskId) {
+async function fetchSingleTask(taskId) {
   try {
     const response = await fetch(`${API_URL}/tasks/${taskId}`, {
       headers: { Authorization: `Bearer ${token}` },
@@ -27,7 +27,7 @@ export async function fetchSingleTask(taskId) {
   }
 }
 
-export async function fetchStatuses() {
+async function fetchStatuses() {
   try {
     const response = await fetch(`${API_URL}/statuses`, {
       headers: { Authorization: `Bearer ${token}` },
@@ -40,7 +40,7 @@ export async function fetchStatuses() {
   }
 }
 
-export async function fetchPriorities() {
+async function fetchPriorities() {
   try {
     const response = await fetch(`${API_URL}/priorities`, {
       headers: { Authorization: `Bearer ${token}` },
@@ -53,7 +53,7 @@ export async function fetchPriorities() {
   }
 }
 
-export async function fetchDepartments() {
+async function fetchDepartments() {
   try {
     const response = await fetch(`${API_URL}/departments`, {
       headers: { Authorization: `Bearer ${token}` },
@@ -66,7 +66,7 @@ export async function fetchDepartments() {
   }
 }
 
-export async function fetchEmployees() {
+async function fetchEmployees() {
   try {
     const response = await fetch(`${API_URL}/employees`, {
       headers: { Authorization: `Bearer ${token}` },
@@ -79,7 +79,7 @@ export async function fetchEmployees() {
   }
 }
 
-export async function fetchComments(taskId) {
+async function fetchComments(taskId) {
   try {
     const response = await fetch(`${API_URL}/tasks/${taskId}/comments`, {
       headers: { Authorization: `Bearer ${token}` },
@@ -92,7 +92,7 @@ export async function fetchComments(taskId) {
   }
 }
 
-export async function createTask(taskData) {
+async function createTask(taskData) {
   try {
     const response = await fetch(`${API_URL}/tasks`, {
       method: "POST",
@@ -110,7 +110,7 @@ export async function createTask(taskData) {
   }
 }
 
-export async function createEmployee(employeeData) {
+async function createEmployee(employeeData) {
   try {
     const response = await fetch(`${API_URL}/employees`, {
       method: "POST",
@@ -128,7 +128,7 @@ export async function createEmployee(employeeData) {
   }
 }
 
-export async function createComment(taskId, commentData) {
+async function createComment(taskId, commentData) {
   try {
     const response = await fetch(`${API_URL}/tasks/${taskId}/comments`, {
       method: "POST",
@@ -146,7 +146,7 @@ export async function createComment(taskId, commentData) {
   }
 }
 
-export async function updateTask(taskId, statusId) {
+async function updateTask(taskId, statusId) {
   try {
     const response = await fetch(`${API_URL}/tasks/${taskId}`, {
       method: "PUT",

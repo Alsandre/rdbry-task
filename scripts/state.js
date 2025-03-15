@@ -6,7 +6,7 @@ class AppState {
     this.state = {
       tasks: [],
       employees: [],
-      filters: this.loadFromStorage("filters") || {},
+      filters: {},
       // Add additional state properties as needed
     };
 
@@ -42,4 +42,4 @@ class AppState {
 }
 
 // Export a single instance (Singleton pattern) for global access
-export const appState = new AppState();
+const appState = new AppState();
