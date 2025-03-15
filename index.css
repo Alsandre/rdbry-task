@@ -1,0 +1,21 @@
+.header {
+  background-color: #f4f4f4;
+  padding: 1rem;
+  text-align: center;
+  font-size: 1.5rem;
+}
+.dashboard {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+}
+.task-columns {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+.task-column {
+  background-color: #eaeaea;
+  padding: 1rem;
+  min-height: 300px;
+}
