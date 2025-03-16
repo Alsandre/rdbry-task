@@ -1,4 +1,5 @@
 export function createTaskCard(task) {
+  console.log("crt", task);
   const card = document.createElement("div");
   card.className = "task-card";
   card.style.cursor = "pointer";
@@ -17,17 +18,17 @@ export function createTaskCard(task) {
   // Priority pill
   const priorityPill = document.createElement("span");
   priorityPill.className = "pill priority-pill";
-  priorityPill.textContent = task.priority; // assuming string
+  priorityPill.textContent = task.priority.name; // assuming string
   // Department label (as a pill)
   const deptPill = document.createElement("span");
   deptPill.className = "pill department-pill";
-  deptPill.textContent = task.department; // assuming string
+  deptPill.textContent = task.department.name; // assuming string
   row1Left.appendChild(priorityPill);
   row1Left.appendChild(deptPill);
 
   const row1Right = document.createElement("div");
   row1Right.className = "row1-right";
-  const dueDate = new Date(task.dueDate);
+  const dueDate = new Date(task.due_date);
   row1Right.textContent = formatDueDate(dueDate);
 
   row1.appendChild(row1Left);
@@ -38,7 +39,7 @@ export function createTaskCard(task) {
   row2.className = "card-row row2";
   const titleEl = document.createElement("h3");
   titleEl.className = "task-title";
-  titleEl.textContent = task.title;
+  titleEl.textContent = task.name;
   const descEl = document.createElement("p");
   descEl.className = "task-description";
   // Shorten description if needed
@@ -83,5 +84,6 @@ function formatDueDate(date) {
   const dd = String(date.getDate()).padStart(2, "0");
   const mm = String(date.getMonth() + 1).padStart(2, "0");
   const yyyy = date.getFullYear();
+  console.log("formatDueDate", weekday, dd, mm, yyyy);
   return `${weekday} - ${dd}/${mm}/${yyyy}`;
 }

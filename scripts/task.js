@@ -90,7 +90,7 @@ function renderTaskDetails(task, statuses) {
 
   // Render formatted due date (Row 4, third info row)
   const dueDateDisplay = document.getElementById("dueDateDisplay");
-  const dueDate = new Date(task.dueDate);
+  const dueDate = new Date(task.due_date);
   dueDateDisplay.textContent = formatDueDate(dueDate);
 }
 
