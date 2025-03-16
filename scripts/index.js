@@ -1,5 +1,6 @@
 import { fetchStatuses, fetchDepartments, fetchEmployees, fetchPriorities, fetchTasks } from "./api.js";
 import { storageService } from "./storage.js";
+import { createTaskCard } from "./utils.js";
 
 let currentFilters = storageService.getFilters() || {
   department: [], // multi-select: array of department IDs
@@ -70,19 +71,8 @@ function renderDashboard(statuses, tasks) {
     const tasksForStatus = tasks.filter((task) => task.statusId === status.id);
 
     tasksForStatus.forEach((task) => {
-      // Create task card element
-      const taskCard = document.createElement("div");
-      taskCard.className = "task-card";
-
-      // Build card inner HTML. Adjust property names if needed.
-      taskCard.innerHTML = `
-        <h3>${task.title}</h3>
-        <p>${task.description.substring(0, 100)}${task.description.length > 100 ? "..." : ""}</p>
-        <span class="priority ${task.priority.toLowerCase()}">${task.priority}</span>
-        <span>${task.department}</span>
-        <img src="${task.employee.avatar}" alt="${task.employee.name}" class="avatar">
-      `;
-      column.appendChild(taskCard);
+      const card = createTaskCard(task);
+      column.appendChild(card);
     });
 
     container.appendChild(column);
@@ -120,7 +110,6 @@ function filterTasks(tasks) {
       (!employee || task.employee.name === employee)
   );
 }
-
 
 function openFilterDropdown(filterType) {
   // Remove any existing dropdown from previous clicks

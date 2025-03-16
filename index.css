@@ -72,3 +72,69 @@
   border-radius: 15px;
   cursor: pointer;
 }
+
+.task-card {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 0.8rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Row styling */
+.card-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+/* Row 1 specifics */
+.row1-left {
+  display: flex;
+  gap: 0.5rem;
+}
+.row1-right {
+  font-weight: bold;
+}
+
+/* Pill styling */
+.pill {
+  background-color: #007bff;
+  color: #fff;
+  padding: 0.2rem 0.5rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+}
+
+/* Row 2: Title and description */
+.row2 {
+  flex-direction: column;
+  text-align: left;
+}
+.task-title {
+  margin: 0;
+  font-size: 1.1rem;
+}
+.task-description {
+  margin: 0.2rem 0 0;
+  color: #555;
+  font-size: 0.9rem;
+}
+
+/* Row 3: Assignee avatar and comments */
+.row3-left {
+  display: flex;
+  align-items: center;
+}
+.assignee-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.row3-right {
+  align-self: center;
+  font-size: 0.9rem;
+  color: #333;
+}
