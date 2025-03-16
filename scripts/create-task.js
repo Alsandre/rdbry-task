@@ -99,7 +99,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   function renderEmployeeOptions() {
     optionsContainer.innerHTML = "";
     window.allEmployees.forEach((emp) => {
-      console.log("emp", emp);
       const option = document.createElement("div");
       option.className = "dropdown-option";
       // Create avatar element
@@ -204,7 +203,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       employee: currentEmployee,
       dueDate: dueDateInput.value,
     };
-    console.log("formData", formData);
     storageService.setTaskFormData(formData);
   });
 
@@ -229,27 +227,25 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
     // Build task data
     const taskData = {
-      title: titleInput.value.trim(),
+      name: titleInput.value.trim(),
       description: descriptionInput.value.trim(),
-      priorityId: parseInt(prioritySelect.value),
-      statusId: parseInt(statusSelect.value),
-      departmentId: parseInt(departmentSelect.value),
-      employeeId: parseInt(document.getElementById("employeeInput").value),
-      dueDate: dueDateInput.value,
+      priority_id: parseInt(prioritySelect.value),
+      status_id: parseInt(statusSelect.value),
+      employee_id: parseInt(document.getElementById("employeeInput").value),
+      due_date: dueDateInput.value,
     };
 
     try {
       const createdTask = await createTask(taskData);
       if (createdTask) {
-        alert("Task created successfully!");
         storageService.clearTaskFormData();
-        window.location.href = "index.html";
+        window.location.href = "/index.html";
       } else {
-        alert("Failed to create task. Please try again.");
+        console.log("Failed to create task. Please try again.");
       }
+      console.log("taskData", taskData);
     } catch (error) {
       console.error("Error creating task:", error);
-      alert("An error occurred while creating the task.");
     }
   });
   // Listen for "დაამატე თანამშრომელი" click in employee select
