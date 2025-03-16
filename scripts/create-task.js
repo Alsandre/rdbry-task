@@ -151,10 +151,8 @@ document.addEventListener("DOMContentLoaded", async () => {
       alert("An error occurred while creating the task.");
     }
   });
-  console.log("employeeSelect", employeeSelect);
   // Listen for "დაამატე თანამშრომელი" click in employee select
   employeeSelect.addEventListener("change", (e) => {
-    console.log("employeeSelect", employeeSelect);
     if (employeeSelect.value === "add") {
       // Trigger modal in task context
       const modal = document.querySelector("employee-modal");

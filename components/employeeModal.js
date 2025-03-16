@@ -314,7 +314,6 @@ class EmployeeModal extends HTMLElement {
 
     try {
       const newEmployee = await createEmployee(employeeData);
-      console.log(newEmployee);
       if (newEmployee) {
         // Dispatch event to notify new employee creation
         this.dispatchEvent(

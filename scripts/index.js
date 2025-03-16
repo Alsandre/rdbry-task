@@ -80,7 +80,6 @@ function renderDashboard(statuses, tasks) {
 }
 
 function setupFilters(tasks) {
-  console.log(storageService.getFilters());
   const { department, priority, employee } = storageService.getFilters() || {};
   document.getElementById("departmentFilter").value = department || "";
   document.getElementById("priorityFilter").value = priority || "";
