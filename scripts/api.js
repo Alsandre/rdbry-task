@@ -113,13 +113,21 @@ export async function createTask(taskData) {
 
 export async function createEmployee(employeeData) {
   try {
+    // Create FormData object and append the required fields
+    const formData = new FormData();
+    formData.append("name", employeeData.name);
+    formData.append("surname", employeeData.surname);
+    formData.append("department_id", employeeData.department_id);
+    formData.append("avatar", employeeData.avatar); // avatar should be a File object
+
     const response = await fetch(`${API_URL}/employees`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
+        // Do NOT set Content-Type when using FormData!
+        Accept: "application/json",
       },
-      body: JSON.stringify(employeeData),
+      body: formData,
     });
     if (!response.ok) throw new Error(`Error creating employee: ${response.status}`);
     return await response.json();

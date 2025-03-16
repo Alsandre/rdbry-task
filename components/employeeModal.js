@@ -304,16 +304,17 @@ class EmployeeModal extends HTMLElement {
     }
     // Prepare employee data
     const employeeData = {
-      firstName: this.firstNameInput.value.trim(),
-      lastName: this.lastNameInput.value.trim(),
-      departmentId: parseInt(this.departmentSelect.value),
+      name: this.firstNameInput.value.trim(),
+      surname: this.lastNameInput.value.trim(),
+      department_id: parseInt(this.departmentSelect.value),
       // For simplicity, assume API accepts avatar as Base64 encoded string.
       // In production, you might need to handle file uploads differently.
-      avatar: await this._fileToBase64(this.avatarInput.files[0]),
+      avatar: this.avatarInput.files[0],
     };
 
     try {
       const newEmployee = await createEmployee(employeeData);
+      console.log(newEmployee);
       if (newEmployee) {
         // Dispatch event to notify new employee creation
         this.dispatchEvent(
