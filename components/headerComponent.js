@@ -50,10 +50,10 @@ class AppHeader extends HTMLElement {
         </style>
         <header class="header">
           <div class="header-container">
-            <div class="logo">Logo - Here</div>
+            <a href="/index.html" class="logo">Logo - Here</a>
             <div class="actions">
               <button id="createEmployeeBtn">თანამშრომლის შექმნა</button>
-              <a href="./create-task/create-task.html">შექმენი ახალი დავალება</a>
+              <a href="/create-task/create-task.html">შექმენი ახალი დავალება</a>
             </div>
           </div>
         </header>
