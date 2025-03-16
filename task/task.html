@@ -4,20 +4,52 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Task Details</title>
-    <link rel="stylesheet" href="styles/main.css" />
-    <script src="components/headerComponent.js" type="module"></script>
-    <script src="components/employeeModal.js" type="module"></script>
+    <link rel="stylesheet" href="task.css" />
+    <!-- Load header and modal components -->
+    <script src="components/header-component.js" type="module"></script>
+    <script src="components/employee-modal.js" type="module"></script>
   </head>
   <body>
+    <!-- Include reusable header -->
     <app-header></app-header>
-    <main class="task-detail">
-      <section class="task-info">
-        <!-- Task Information Here -->
+    <main class="task-preview">
+      <section class="task-details">
+        <!-- Row 1: Priority and Department Pills -->
+        <div class="task-pills"></div>
+        <!-- Row 2: Task Title -->
+        <h1 id="taskTitle"></h1>
+        <!-- Row 3: Task Description -->
+        <p id="taskDescription"></p>
+        <!-- Row 4: Task Info Card -->
+        <h2>დავალების დეტალები</h2>
+        <div class="task-info-card">
+          <div class="info-row">
+            <div class="info-label">სტატუსი:</div>
+            <div class="info-value">
+              <select id="taskStatusSelect"></select>
+            </div>
+          </div>
+          <div class="info-row">
+            <div class="info-label">პასუხისმგებელი თანამშრომელი:</div>
+            <div class="info-value" id="employeeCard">
+              <!-- Employee card will be rendered here -->
+            </div>
+          </div>
+          <div class="info-row">
+            <div class="info-label">დამთავრების თარიღი:</div>
+            <div class="info-value" id="dueDateDisplay"></div>
+          </div>
+        </div>
       </section>
-      <section class="comments">
-        <!-- Comments Section Here -->
+      <section class="task-comments">
+        <h2>კომენტარები</h2>
+        <div class="comments-container">
+          <!-- Comments will be loaded dynamically; placeholder for now -->
+          <p>კომენტარების ნაწილი მყარად იდენტიფიცირდება დავალების სისტემასთან. (Placeholder)</p>
+        </div>
       </section>
     </main>
+    <!-- Employee modal for adding/updating employee info -->
     <employee-modal></employee-modal>
     <script src="../scripts/task.js" type="module"></script>
   </body>

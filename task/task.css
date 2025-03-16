@@ -1,0 +1,71 @@
+/* Overall layout for task preview page */
+.task-preview {
+  display: flex;
+  gap: 2rem;
+  padding: 1rem;
+}
+
+/* Left section: Task Details */
+.task-details {
+  flex: 2;
+}
+
+/* Right section: Comments */
+.task-comments {
+  flex: 1;
+  border-left: 1px solid #ccc;
+  padding-left: 1rem;
+}
+
+/* Task pills (priority and department) */
+.task-pills {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+.task-pills .pill {
+  background-color: #007bff;
+  color: #fff;
+  padding: 0.3rem 0.6rem;
+  border-radius: 15px;
+  font-size: 0.9rem;
+}
+
+/* Task info card */
+.task-info-card {
+  border: 1px solid #ddd;
+  padding: 1rem;
+  margin-top: 1rem;
+  border-radius: 4px;
+}
+.task-info-card .info-row {
+  display: flex;
+  margin-bottom: 0.5rem;
+}
+.task-info-card .info-label {
+  flex: 1;
+  font-weight: bold;
+}
+.task-info-card .info-value {
+  flex: 2;
+}
+
+/* Employee card styling */
+.employee-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+}
+.employee-info {
+  display: inline-block;
+  vertical-align: top;
+}
+
+/* Comments container placeholder */
+.comments-container {
+  background: #f9f9f9;
+  padding: 1rem;
+  border-radius: 4px;
+  min-height: 200px;
+}
