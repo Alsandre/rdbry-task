@@ -15,7 +15,6 @@ let allEmployees = [];
 document.addEventListener("DOMContentLoaded", async () => {
   try {
     const [statuses, tasks] = await Promise.all([fetchStatuses(), fetchTasks()]);
-    renderDashboard(statuses, applyFilters(tasks));
 
     const [departments, priorities, employees] = await Promise.all([fetchDepartments(), fetchPriorities(), fetchEmployees()]);
     allDepartments = departments;
@@ -36,16 +35,14 @@ document.addEventListener("DOMContentLoaded", async () => {
       openFilterDropdown("employee");
     });
 
-    // If there are persisted filters, reapply them (and re-render tasks)
-    if (currentFilters) {
-      renderDashboard(statuses, applyFilters(tasks));
-    }
+    renderDashboard(statuses, applyFilters(tasks));
   } catch (error) {
     console.error("Error initializing dashboard:", error);
   }
 });
 
 function renderDashboard(statuses, tasks) {
+  console.log("renderDashboard", statuses, tasks);
   const container = document.querySelector(".task-columns");
   container.innerHTML = ""; // Clear any pre-existing content
 
@@ -55,21 +52,22 @@ function renderDashboard(statuses, tasks) {
   container.style.gap = "1rem";
   container.style.padding = "1rem";
 
-  statuses.forEach((status) => {
+  statuses.forEach((currentStatus) => {
     // Create a column element for each status
     const column = document.createElement("div");
     column.className = "task-column";
-    column.dataset.statusId = status.id; // Ensure your status objects have an 'id'
+    column.dataset.statusId = currentStatus.id; // Ensure your status objects have an 'id'
 
     // Create and add the column header (status name)
     const header = document.createElement("h2");
-    header.textContent = status.name; // Ensure your status objects have a 'name'
+    header.textContent = currentStatus.name; // Ensure your status objects have a 'name'
     header.style.textAlign = "center";
     column.appendChild(header);
 
     // Filter tasks that belong to the current status
-    const tasksForStatus = tasks.filter((task) => task.statusId === status.id);
-
+    const tasksForStatus = tasks.filter((task) => {
+      return task.status.id === currentStatus.id;
+    });
     tasksForStatus.forEach((task) => {
       const card = createTaskCard(task);
       column.appendChild(card);

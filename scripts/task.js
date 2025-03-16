@@ -1,4 +1,5 @@
 import { fetchSingleTask, fetchStatuses, updateTask } from "./api.js";
+import { formatDueDate } from "./utils.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
   // Extract taskId from URL, e.g. ?id=123
@@ -93,11 +94,3 @@ function renderTaskDetails(task, statuses) {
   dueDateDisplay.textContent = formatDueDate(dueDate);
 }
 
-function formatDueDate(date) {
-  // Format: "Monday - dd/mm/yyyy"
-  const weekday = date.toLocaleDateString("en-US", { weekday: "long" });
-  const dd = String(date.getDate()).padStart(2, "0");
-  const mm = String(date.getMonth() + 1).padStart(2, "0");
-  const yyyy = date.getFullYear();
-  return `${weekday} - ${dd}/${mm}/${yyyy}`;
-}

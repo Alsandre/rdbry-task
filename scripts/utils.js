@@ -76,3 +76,12 @@ export function createTaskCard(task) {
 
   return card;
 }
+
+function formatDueDate(date) {
+  // Format: "Monday - dd/mm/yyyy"
+  const weekday = date.toLocaleDateString("en-US", { weekday: "long" });
+  const dd = String(date.getDate()).padStart(2, "0");
+  const mm = String(date.getMonth() + 1).padStart(2, "0");
+  const yyyy = date.getFullYear();
+  return `${weekday} - ${dd}/${mm}/${yyyy}`;
+}
