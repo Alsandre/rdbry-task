@@ -19,3 +19,49 @@
   padding: 1rem;
   min-height: 300px;
 }
+
+/* Filters section container */
+.filters {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+/* Each filter container */
+.filters .filter {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  position: relative;
+}
+
+/* Filter pills container */
+.filter-pills {
+  width: 100%;
+  padding: 0.5rem 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  background: #f9f9f9;
+}
+
+/* Individual pill styling */
+.filter-pill {
+  border: 1px solid #ccc;
+  padding: 0.3rem 0.6rem;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+/* Dropdown for filters */
+.filter-dropdown {
+  background: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  padding: 0.5rem;
+  position: absolute;
+  z-index: 1000;
+}

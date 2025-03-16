@@ -10,12 +10,20 @@
   </head>
   <body>
     <app-header></app-header>
+    <aside class="filters">
+      <div class="filter" id="departmentFilterContainer">
+        <span>დეპარტამენტი</span>
+      </div>
+      <div class="filter" id="priorityFilterContainer">
+        <span>პრიორიტეტი</span>
+      </div>
+      <div class="filter" id="employeeFilterContainer">
+        <span>თანამშრომელი</span>
+      </div>
+    </aside>
+    <!-- Filter pills container (will wrap if needed) -->
+    <div class="filter-pills"></div>
     <main class="dashboard">
-      <aside class="filters">
-        <input type="select" placeholder="დეპარტამენტი" id="departmentFilter" />
-        <input type="select" placeholder="პრიორიტეტი" id="priorityFilter" />
-        <input type="select" placeholder="თანამშრომელი" id="employeeFilter" />
-      </aside>
       <section class="task-columns">
         <div class="task-column task-column--todo">To Do</div>
         <div class="task-column task-column--in-progress">In Progress</div>
