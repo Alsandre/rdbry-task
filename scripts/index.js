@@ -244,6 +244,7 @@ function updateFilterPills() {
   const pillsContainer = document.querySelector(".filter-pills");
   pillsContainer.innerHTML = ""; // clear existing pills
 
+  let hasFilters = false;
   // For each filter type, if selections exist, create a pill for each selection.
   // For multi-select filters:
   ["department", "priority"].forEach((filterType) => {
@@ -252,6 +253,7 @@ function updateFilterPills() {
       if (option) {
         const pill = createPill(filterType, id, option.name);
         pillsContainer.appendChild(pill);
+        hasFilters = true;
       }
     });
   });
@@ -261,7 +263,26 @@ function updateFilterPills() {
     if (option) {
       const pill = createPill("employee", currentFilters.employee, option.name);
       pillsContainer.appendChild(pill);
+      hasFilters = true;
     }
+  }
+
+  if (hasFilters) {
+    const clearBtn = document.createElement("button");
+    clearBtn.textContent = "გასუფთავება";
+    clearBtn.className = "clear-filters-btn";
+    clearBtn.style.marginLeft = "auto"; // Adjust style to position it at the end
+    clearBtn.addEventListener("click", () => {
+      // Clear filter values
+      currentFilters = { department: [], priority: [], employee: null };
+      storageService.clearFilters();
+      updateFilterPills();
+      // Re-fetch tasks and statuses (or use cached ones) to re-render the dashboard without filters
+      Promise.all([fetchStatuses(), fetchTasks()]).then(([statuses, tasks]) => {
+        renderDashboard(statuses, applyFilters(tasks));
+      });
+    });
+    pillsContainer.appendChild(clearBtn);
   }
 }
 function getOptionById(filterType, id) {
