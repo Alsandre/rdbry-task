@@ -1,3 +1,6 @@
+import { fetchPriorities, fetchStatuses, fetchDepartments, fetchEmployees, createTask } from "./api.js";
+import { storageService } from "./storage.js";
+
 document.addEventListener("DOMContentLoaded", async () => {
   const form = document.getElementById("new-task-form");
   const titleInput = document.getElementById("taskTitle");

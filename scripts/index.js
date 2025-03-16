@@ -1,3 +1,6 @@
+import { fetchStatuses, fetchTasks } from "./api.js";
+import { storageService } from "./storage.js";
+
 document.addEventListener("DOMContentLoaded", async () => {
   try {
     // Fetch statuses and tasks concurrently
@@ -58,7 +61,7 @@ function renderDashboard(statuses, tasks) {
 }
 
 function setupFilters(tasks) {
-  console.log(storageService.getFilters())
+  console.log(storageService.getFilters());
   const { department, priority, employee } = storageService.getFilters() || {};
   document.getElementById("departmentFilter").value = department || "";
   document.getElementById("priorityFilter").value = priority || "";

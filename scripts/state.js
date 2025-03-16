@@ -42,4 +42,4 @@ class AppState {
 }
 
 // Export a single instance (Singleton pattern) for global access
-const appState = new AppState();
+export const appState = new AppState();
