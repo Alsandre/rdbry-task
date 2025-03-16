@@ -5,53 +5,61 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Create New Task</title>
     <link rel="stylesheet" href="create-task.css" />
-    <script src="../components/headerComponent.js" type="module"></script>
-    <script src="../components/employeeModal.js" type="module"></script>
   </head>
   <body>
+    <!-- Include the header component -->
     <app-header></app-header>
+
     <main class="task-form">
       <form id="new-task-form">
         <div>
-          <label for="taskTitle">სათაური<span>*</span></label>
+          <label for="taskTitle">Title <span>*</span></label>
           <input type="text" id="taskTitle" name="title" required minlength="3" maxlength="255" />
         </div>
         <div>
-          <label for="taskDescription">არწერა</label>
+          <label for="taskDescription">Description</label>
           <textarea id="taskDescription" name="description" rows="4" maxlength="255"></textarea>
         </div>
         <div>
-          <label for="taskPriority">პრიორიტეტი<span>*</span></label>
+          <label for="taskPriority">Priority <span>*</span></label>
           <select id="taskPriority" name="priority" required>
-            <!-- Options populated dynamically -->
+            <!-- Options will be populated dynamically -->
           </select>
         </div>
         <div>
-          <label for="taskStatus">სტატუსი<span>*</span></label>
+          <label for="taskStatus">Status <span>*</span></label>
           <select id="taskStatus" name="status" required>
-            <!-- Options populated dynamically -->
+            <!-- Options will be populated dynamically -->
           </select>
         </div>
         <div>
-          <label for="taskDepartment">დეპარტამენტი<span>*</span></label>
+          <label for="taskDepartment">Department <span>*</span></label>
           <select id="taskDepartment" name="department" required>
-            <!-- Options populated dynamically -->
+            <!-- Options will be populated dynamically -->
           </select>
         </div>
         <div>
-          <label for="taskEmployee">პასუხისმგებელი თანამშრომელი<span>*</span></label>
+          <label for="taskEmployee">Responsible Employee <span>*</span></label>
           <select id="taskEmployee" name="employee" required>
-            <!-- Options populated based on selected department -->
+            <!-- Options will be populated based on selected department -->
+            <!-- First option is "დაამატე თანამშრომელი" -->
+            <option value="add" id="addEmployeeOption">დაამატე თანამშრომელი</option>
           </select>
         </div>
         <div>
-          <label for="taskDueDate">დედლაინი<span>*</span></label>
+          <label for="taskDueDate">Due Date <span>*</span></label>
           <input type="date" id="taskDueDate" name="dueDate" required />
         </div>
-        <button type="submit">დავალების შექმნა</button>
+        <button type="submit">Create Task</button>
       </form>
     </main>
-    <employee-modal></employee-modal>
+
+    <!-- Include our custom components -->
+    <script src="../components/headerComponent.js" type="module"></script>
+    <script src="../components/employeeModal.js" type="module"></script>
+    <!-- Include the necessary scripts -->
     <script src="../scripts/create-task.js" type="module"></script>
+    <!-- Place the employee modal in the page -->
+    <employee-modal></employee-modal>
   </body>
 </html>
