@@ -8,12 +8,15 @@
   </head>
   <body>
     <header class="header">
-      <h1 class="header__title">Task Dashboard</h1>
+      <span>logo - here</span>
+      <div><button>თანამშრომლის შექმნა</button><a href="./create-task/create-task.html">შექმენი ახალი დავალება</a></div>
     </header>
 
     <main class="dashboard">
       <aside class="filters">
-        <!-- Filter Options Here -->
+        <input type="select" placeholder="დეპარტამენტი" id="departmentFilter" />
+        <input type="select" placeholder="პრიორიტეტი" id="priorityFilter" />
+        <input type="select" placeholder="თანამშრომელი" id="employeeFilter" />
       </aside>
       <section class="task-columns">
         <div class="task-column task-column--todo">To Do</div>

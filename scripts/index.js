@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // Render the dynamic dashboard
     renderDashboard(statuses, tasks);
-    // setupFilters(tasks);
+    setupFilters(tasks);
   } catch (error) {
     console.error("Error loading dashboard data:", error);
     // You could also display an error message in the UI here.
@@ -59,7 +59,7 @@ function renderDashboard(statuses, tasks) {
 
 function setupFilters(tasks) {
   console.log(storageService.getFilters())
-  const { department, priority, employee } = storageService.getFilters();
+  const { department, priority, employee } = storageService.getFilters() || {};
   document.getElementById("departmentFilter").value = department || "";
   document.getElementById("priorityFilter").value = priority || "";
   document.getElementById("employeeFilter").value = employee || "";

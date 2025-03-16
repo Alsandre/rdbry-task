@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>New Task</title>
-    <link rel="stylesheet" href="styles/main.css" />
+    <title>Create New Task</title>
+    <link rel="stylesheet" href="create-task.css" />
   </head>
   <body>
     <header class="header">
@@ -12,9 +12,49 @@
     </header>
     <main class="task-form">
       <form id="new-task-form">
-        <!-- Task Form Fields Here -->
+        <div>
+          <label for="taskTitle">სათაური<span>*</span></label>
+          <input type="text" id="taskTitle" name="title" required minlength="3" maxlength="255" />
+        </div>
+        <div>
+          <label for="taskDescription">არწერა</label>
+          <textarea id="taskDescription" name="description" rows="4" maxlength="255"></textarea>
+        </div>
+        <div>
+          <label for="taskPriority">პრიორიტეტი<span>*</span></label>
+          <select id="taskPriority" name="priority" required>
+            <!-- Options populated dynamically -->
+          </select>
+        </div>
+        <div>
+          <label for="taskStatus">სტატუსი<span>*</span></label>
+          <select id="taskStatus" name="status" required>
+            <!-- Options populated dynamically -->
+          </select>
+        </div>
+        <div>
+          <label for="taskDepartment">დეპარტამენტი<span>*</span></label>
+          <select id="taskDepartment" name="department" required>
+            <!-- Options populated dynamically -->
+          </select>
+        </div>
+        <div>
+          <label for="taskEmployee">პასუხისმგებელი თანამშრომელი<span>*</span></label>
+          <select id="taskEmployee" name="employee" required>
+            <!-- Options populated based on selected department -->
+          </select>
+        </div>
+        <div>
+          <label for="taskDueDate">დედლაინი<span>*</span></label>
+          <input type="date" id="taskDueDate" name="dueDate" required />
+        </div>
+        <button type="submit">დავალების შექმნა</button>
       </form>
     </main>
-    <script src="js/new-task.js"></script>
+
+    <script src="../scripts/state.js"></script>
+    <script src="../scripts/storage.js"></script>
+    <script src="../scripts/api.js"></script>
+    <script src="../scripts/create-task.js"></script>
   </body>
 </html>
