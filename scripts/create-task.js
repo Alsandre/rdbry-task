@@ -1,6 +1,8 @@
 import { fetchPriorities, fetchStatuses, fetchDepartments, fetchEmployees, createTask } from "./api.js";
 import { storageService } from "./storage.js";
 
+let currentEmployee = null;
+
 document.addEventListener("DOMContentLoaded", async () => {
   const form = document.getElementById("new-task-form");
   const titleInput = document.getElementById("taskTitle");
@@ -8,26 +10,20 @@ document.addEventListener("DOMContentLoaded", async () => {
   const prioritySelect = document.getElementById("taskPriority");
   const statusSelect = document.getElementById("taskStatus");
   const departmentSelect = document.getElementById("taskDepartment");
-  const employeeSelect = document.getElementById("taskEmployee");
-  const dueDateInput = document.getElementById("taskDueDate");
+  // const employeeSelect = document.getElementById("taskEmployee");
+  const customSelect = document.getElementById("customEmployeeSelect");
+  const employeeInput = document.getElementById("employeeInput");
+  const dropdown = document.getElementById("employeeDropdown");
+  const optionsContainer = dropdown.querySelector(".options-container");
 
-  // Set default due date to tomorrow
-  let tomorrow = new Date();
-  tomorrow.setDate(tomorrow.getDate() + 1);
-  dueDateInput.value = tomorrow.toISOString().split("T")[0];
+  const dueDateInput = document.getElementById("taskDueDate");
 
   // Load persisted form data (if any)
   const persistedData = storageService.getTaskFormData();
   if (persistedData) {
     titleInput.value = persistedData.title || "";
     descriptionInput.value = persistedData.description || "";
-    prioritySelect.value = persistedData.priority || "";
-    statusSelect.value = persistedData.status || "";
-    departmentSelect.value = persistedData.department || "";
-    // Dispatch change event to repopulate employee dropdown
-    departmentSelect.dispatchEvent(new Event("change"));
-    employeeSelect.value = persistedData.employee || "";
-    dueDateInput.value = persistedData.dueDate || tomorrow.toISOString().split("T")[0];
+    dueDateInput.value = persistedData.dueDate || "";
   }
 
   // Populate dropdowns with API data concurrently
@@ -72,27 +68,131 @@ document.addEventListener("DOMContentLoaded", async () => {
     window.allEmployees = employees;
 
     // Initially populate employee dropdown based on selected department
-    updateEmployeeDropdown();
+    renderEmployeeOptions();
+    // Now, if persisted data exists, reapply it
+    if (persistedData) {
+      if (persistedData.priority) {
+        prioritySelect.value = persistedData.priority;
+      }
+      if (persistedData.status) {
+        statusSelect.value = persistedData.status;
+      }
+      if (persistedData.department) {
+        departmentSelect.value = persistedData.department;
+        // Trigger change event to update employee options
+        departmentSelect.dispatchEvent(new Event("change"));
+      }
+      if (persistedData.employee) {
+        // Here, persistedData.employee should ideally be an object with id
+        employeeInput.value = persistedData.employee.id;
+        selectEmployee(persistedData.employee);
+      }
+    }
   } catch (error) {
     console.error("Error fetching dropdown data:", error);
   }
 
   // Update employee dropdown based on selected department
-  departmentSelect.addEventListener("change", updateEmployeeDropdown);
+  departmentSelect.addEventListener("change", selectEmployee());
 
-  function updateEmployeeDropdown() {
-    const selectedDeptId = departmentSelect.value;
-    // Clear current employee options except the "დაამატე თანამშრომელი" option
-    employeeSelect.innerHTML = `<option value="add" id="addEmployeeOption">დაამატე თანამშრომელი</option>`;
-    const filteredEmployees = window.allEmployees.filter((emp) => emp.departmentId === parseInt(selectedDeptId));
-    filteredEmployees.forEach((emp) => {
-      const option = document.createElement("option");
-      option.value = emp.id;
-      option.textContent = `${emp.firstName} ${emp.lastName}`;
-      employeeSelect.appendChild(option);
+  // Function to render employee options in dropdown
+  function renderEmployeeOptions() {
+    optionsContainer.innerHTML = "";
+    window.allEmployees.forEach((emp) => {
+      console.log("emp", emp);
+      const option = document.createElement("div");
+      option.className = "dropdown-option";
+      // Create avatar element
+      const avatar = document.createElement("img");
+      avatar.className = "option-avatar";
+      avatar.src = emp.avatar;
+      avatar.alt = emp.name + " " + emp.surname;
+      // Create text element
+      const text = document.createElement("span");
+      text.textContent = `${emp.name} ${emp.surname}`;
+      option.appendChild(avatar);
+      option.appendChild(text);
+      // On click, select this employee
+      option.addEventListener("click", () => {
+        selectEmployee(emp);
+      });
+      optionsContainer.appendChild(option);
     });
   }
 
+  // Function to select an employee
+  function selectEmployee(emp) {
+    if (!emp) return;
+    currentEmployee = emp;
+    // Update hidden input with employee id
+    employeeInput.value = emp.id;
+    form.dispatchEvent(new Event("input"));
+    // Update collapsed view: show avatar and name
+    const selectedValue = customSelect.querySelector(".selected-value");
+    selectedValue.innerHTML = ""; // Clear previous content
+    const avatar = document.createElement("img");
+    avatar.src = emp.avatar;
+    avatar.alt = emp.name + " " + emp.surname;
+    const nameSpan = document.createElement("span");
+    nameSpan.textContent = `${emp.name} ${emp.surname}`;
+    selectedValue.appendChild(avatar);
+    selectedValue.appendChild(nameSpan);
+
+    closeDropdown();
+  }
+
+  // Function to open dropdown
+  function openDropdown() {
+    renderEmployeeOptions();
+    dropdown.hidden = false;
+    customSelect.classList.add("expanded");
+    // Add outside click listener
+    setTimeout(() => {
+      document.addEventListener("click", outsideClickListener);
+    }, 0);
+  }
+
+  // Function to close dropdown
+  function closeDropdown() {
+    dropdown.hidden = true;
+    customSelect.classList.remove("expanded");
+    document.removeEventListener("click", outsideClickListener);
+  }
+
+  // Outside click listener
+  function outsideClickListener(event) {
+    if (!customSelect.contains(event.target) && !dropdown.contains(event.target)) {
+      closeDropdown();
+    }
+  }
+
+  // Toggle dropdown on click of the custom select
+  customSelect.addEventListener("click", (e) => {
+    // Prevent event from bubbling to document and closing it immediately
+    e.stopPropagation();
+    // If already expanded, collapse it; otherwise, open it.
+    if (dropdown.hidden) {
+      openDropdown();
+    } else {
+      closeDropdown();
+    }
+  });
+
+  // Instead of pre-creating, we can add the event when rendering:
+  dropdown.addEventListener("click", (e) => {
+    // Check if clicked element (or its parent) has class "add-new"
+    let el = e.target;
+    while (el && el !== dropdown) {
+      if (el.classList.contains("add-new")) {
+        // Trigger employee modal in task context
+        const modal = document.querySelector("employee-modal");
+        modal.open("task");
+        closeDropdown();
+        return;
+      }
+      el = el.parentElement;
+    }
+  });
   // Save form data to local storage on input changes
   form.addEventListener("input", () => {
     const formData = {
@@ -101,9 +201,10 @@ document.addEventListener("DOMContentLoaded", async () => {
       priority: prioritySelect.value,
       status: statusSelect.value,
       department: departmentSelect.value,
-      employee: employeeSelect.value,
+      employee: currentEmployee,
       dueDate: dueDateInput.value,
     };
+    console.log("formData", formData);
     storageService.setTaskFormData(formData);
   });
 
@@ -133,7 +234,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       priorityId: parseInt(prioritySelect.value),
       statusId: parseInt(statusSelect.value),
       departmentId: parseInt(departmentSelect.value),
-      employeeId: parseInt(employeeSelect.value),
+      employeeId: parseInt(document.getElementById("employeeInput").value),
       dueDate: dueDateInput.value,
     };
 
@@ -152,24 +253,24 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   });
   // Listen for "დაამატე თანამშრომელი" click in employee select
-  employeeSelect.addEventListener("change", (e) => {
-    if (employeeSelect.value === "add") {
-      // Trigger modal in task context
-      const modal = document.querySelector("employee-modal");
-      modal.open("task");
-      // Reset selection to previous valid value or blank
-      employeeSelect.value = "";
-    }
-  });
+  // employeeSelect.addEventListener("change", (e) => {
+  //   if (employeeSelect.value === "add") {
+  //     // Trigger modal in task context
+  //     const modal = document.querySelector("employee-modal");
+  //     modal.open("task");
+  //     // Reset selection to previous valid value or blank
+  //     employeeSelect.value = "";
+  //   }
+  // });
   // Add a click listener to handle the case when "add" is already selected
-  employeeSelect.addEventListener("click", () => {
-    if (employeeSelect.value === "add") {
-      const modal = document.querySelector("employee-modal");
-      modal.open("task");
-      // Optionally, reset selection
-      employeeSelect.value = "";
-    }
-  });
+  // employeeSelect.addEventListener("click", () => {
+  //   if (employeeSelect.value === "add") {
+  //     const modal = document.querySelector("employee-modal");
+  //     modal.open("task");
+  //     // Optionally, reset selection
+  //     employeeSelect.value = "";
+  //   }
+  // });
   // Listen for employee-created event to update employee dropdown and pre-select the new employee if in task context
   document.addEventListener("employee-created", (e) => {
     const newEmployee = e.detail;
@@ -177,15 +278,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     window.allEmployees.push(newEmployee);
     // If current department matches, add new employee to dropdown
     if (parseInt(departmentSelect.value) === parseInt(newEmployee.departmentId)) {
-      const option = document.createElement("option");
-      option.value = newEmployee.id;
-      option.textContent = `${newEmployee.firstName} ${newEmployee.lastName}`;
-      employeeSelect.appendChild(option);
-      // If modal was opened from task context, auto-select the new employee
-      const modal = document.querySelector("employee-modal");
-      if (modal._context === "task") {
-        employeeSelect.value = newEmployee.id;
-      }
+      selectEmployee(newEmployee);
     }
   });
 });

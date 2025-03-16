@@ -67,3 +67,92 @@
   color: #e74c3c;
   font-size: 0.9rem;
 }
+
+/* Custom select collapsed state */
+.custom-select {
+  width: 550px;
+  height: 45px;
+  border: 1px solid grey;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+  cursor: pointer;
+  position: relative;
+}
+
+.custom-select .selected-value {
+  display: flex;
+  align-items: center;
+}
+
+.custom-select .selected-value img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 8px;
+}
+
+.custom-select .placeholder {
+  color: #999;
+}
+
+/* Arrow styling */
+.custom-select .arrow-icon {
+  font-size: 1rem;
+  transition: transform 0.3s ease;
+}
+
+/* Expanded state: border changes and arrow rotates */
+.custom-select.expanded {
+  border-color: #8338EC;
+}
+.custom-select.expanded .arrow-icon {
+  transform: rotate(180deg);
+}
+
+/* Dropdown container */
+.custom-select-dropdown {
+  width: 550px;
+  max-height: 250px;
+  border: 1px solid #8338EC;
+  border-top: none;
+  overflow-y: auto;
+  position: absolute;
+  background: #fff;
+  z-index: 1000;
+}
+
+/* Each option styling */
+.custom-select-dropdown .dropdown-option {
+  padding: 8px 10px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+}
+
+.custom-select-dropdown .dropdown-option:last-child {
+  border-bottom: none;
+}
+
+.custom-select-dropdown .dropdown-option:hover {
+  background: #f0f0f0;
+}
+
+/* Option: "add new" styling */
+.custom-select-dropdown .dropdown-option.add-new {
+  font-weight: bold;
+  color: #8338EC;
+}
+
+/* Employee option: render avatar + name */
+.custom-select-dropdown .dropdown-option .option-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 8px;
+}

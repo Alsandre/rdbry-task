@@ -39,12 +39,26 @@
           </select>
         </div>
         <div>
-          <label for="taskEmployee">Responsible Employee <span>*</span></label>
-          <select id="taskEmployee" name="employee" required>
-            <!-- Options will be populated based on selected department -->
-            <!-- First option is "დაამატე თანამშრომელი" -->
-            <option value="add" id="addEmployeeOption">დაამატე თანამშრომელი</option>
-          </select>
+          <label for="customEmployeeSelect">Responsible Employee <span>*</span></label>
+          <!-- Hidden input to store selected employee id -->
+          <input type="hidden" id="employeeInput" name="employee" required />
+          <!-- Custom select container -->
+          <div id="customEmployeeSelect" class="custom-select collapsed">
+            <div class="selected-value">
+              <span class="placeholder">აირჩიე თანამშრომელი</span>
+            </div>
+            <div class="arrow">
+              <!-- Use an icon or Unicode arrow -->
+              <span class="arrow-icon">&#9662;</span>
+            </div>
+          </div>
+          <!-- Dropdown container (initially hidden) -->
+          <div id="employeeDropdown" class="custom-select-dropdown" hidden>
+            <!-- First option: add new employee -->
+            <div class="dropdown-option add-new">+ დაამატე ახალი თანამშრომელი</div>
+            <!-- Dynamic list of employee options will be injected here -->
+            <div class="options-container"></div>
+          </div>
         </div>
         <div>
           <label for="taskDueDate">Due Date <span>*</span></label>
