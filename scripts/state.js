@@ -7,6 +7,7 @@ class AppState {
       tasks: [],
       employees: [],
       filters: {},
+      statuses: [],
       // Add additional state properties as needed
     };
 

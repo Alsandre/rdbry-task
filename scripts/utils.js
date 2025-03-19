@@ -1,5 +1,4 @@
 export function createTaskCard(task) {
-  console.log("crt", task);
   const card = document.createElement("div");
   card.className = "task-card";
   card.style.cursor = "pointer";
@@ -84,6 +83,5 @@ function formatDueDate(date) {
   const dd = String(date.getDate()).padStart(2, "0");
   const mm = String(date.getMonth() + 1).padStart(2, "0");
   const yyyy = date.getFullYear();
-  console.log("formatDueDate", weekday, dd, mm, yyyy);
   return `${weekday} - ${dd}/${mm}/${yyyy}`;
 }

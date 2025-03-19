@@ -243,7 +243,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       } else {
         console.log("Failed to create task. Please try again.");
       }
-      console.log("taskData", taskData);
     } catch (error) {
       console.error("Error creating task:", error);
     }

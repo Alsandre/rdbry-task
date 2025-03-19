@@ -1,6 +1,7 @@
 import { fetchStatuses, fetchDepartments, fetchEmployees, fetchPriorities, fetchTasks } from "./api.js";
 import { storageService } from "./storage.js";
 import { createTaskCard } from "./utils.js";
+import { appState } from "./state.js";
 
 let currentFilters = storageService.getFilters() || {
   department: [], // multi-select: array of department IDs
@@ -15,7 +16,7 @@ let allEmployees = [];
 document.addEventListener("DOMContentLoaded", async () => {
   try {
     const [statuses, tasks] = await Promise.all([fetchStatuses(), fetchTasks()]);
-
+    appState.setState({ statuses, tasks });
     const [departments, priorities, employees] = await Promise.all([fetchDepartments(), fetchPriorities(), fetchEmployees()]);
     allDepartments = departments;
     allPriorities = priorities;
@@ -42,7 +43,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 function renderDashboard(statuses, tasks) {
-  console.log("renderDashboard", statuses, tasks);
   const container = document.querySelector(".task-columns");
   container.innerHTML = ""; // Clear any pre-existing content
 
@@ -74,24 +74,6 @@ function renderDashboard(statuses, tasks) {
     });
 
     container.appendChild(column);
-  });
-}
-
-function setupFilters(tasks) {
-  const { department, priority, employee } = storageService.getFilters() || {};
-  document.getElementById("departmentFilter").value = department || "";
-  document.getElementById("priorityFilter").value = priority || "";
-  document.getElementById("employeeFilter").value = employee || "";
-
-  document.querySelectorAll(".filters select").forEach((select) => {
-    select.addEventListener("change", () => {
-      saveFilters({
-        department: document.getElementById("departmentFilter").value,
-        priority: document.getElementById("priorityFilter").value,
-        employee: document.getElementById("employeeFilter").value,
-      });
-      renderTasks(filterTasks(tasks));
-    });
   });
 }
 
@@ -200,9 +182,7 @@ function openFilterDropdown(filterType) {
     // Re-filter tasks and re-render dashboard
     // Assume tasks and statuses are globally available or re-fetch tasks if needed.
     // For simplicity, re-fetch tasks and statuses here:
-    Promise.all([fetchStatuses(), fetchTasks()]).then(([statuses, tasks]) => {
-      renderDashboard(statuses, applyFilters(tasks));
-    });
+    renderDashboard(appState.getState().statuses, applyFilters(appState.getState().tasks));
   });
   dropdown.appendChild(applyBtn);
 
@@ -264,9 +244,7 @@ function updateFilterPills() {
       storageService.clearFilters();
       updateFilterPills();
       // Re-fetch tasks and statuses (or use cached ones) to re-render the dashboard without filters
-      Promise.all([fetchStatuses(), fetchTasks()]).then(([statuses, tasks]) => {
-        renderDashboard(statuses, applyFilters(tasks));
-      });
+      renderDashboard(appState.getState().statuses, applyFilters(appState.getState().tasks));
     });
     pillsContainer.appendChild(clearBtn);
   }
@@ -303,22 +281,20 @@ function removeFilter(filterType, id) {
   storageService.setFilters(currentFilters);
   updateFilterPills();
   // Re-fetch tasks and re-render dashboard
-  Promise.all([fetchStatuses(), fetchTasks()]).then(([statuses, tasks]) => {
-    renderDashboard(statuses, applyFilters(tasks));
-  });
+  renderDashboard(appState.getState().statuses, applyFilters(appState.getState().tasks));
 }
 function applyFilters(tasks) {
   return tasks.filter((task) => {
     // Check department: if filter is active, task.departmentId should match one of them.
-    if (currentFilters.department.length > 0 && !currentFilters.department.includes(task.departmentId)) {
+    if (currentFilters.department.length > 0 && !currentFilters.department.includes(task.department.id)) {
       return false;
     }
     // Check priority: similarly, task.priorityId should be in currentFilters.priority.
-    if (currentFilters.priority.length > 0 && !currentFilters.priority.includes(task.priorityId)) {
+    if (currentFilters.priority.length > 0 && !currentFilters.priority.includes(task.priority.id)) {
       return false;
     }
     // Check employee: if set, task.employeeId must equal it.
-    if (currentFilters.employee && task.employeeId !== currentFilters.employee) {
+    if (currentFilters.employee && task.employee.id !== currentFilters.employee) {
       return false;
     }
     return true;
