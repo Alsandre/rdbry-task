@@ -124,6 +124,14 @@
   font-size: 0.9rem;
   color: #666;
   margin-bottom: 0.5rem;
+  justify-content: flex-start;
+}
+
+.author-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  margin-right: 0.5rem;
 }
 
 .comment-actions {

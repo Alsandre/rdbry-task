@@ -132,11 +132,13 @@ function createCommentElement(comment) {
   const metaDiv = document.createElement("div");
   metaDiv.className = "comment-meta";
   const authorSpan = document.createElement("span");
-  authorSpan.textContent = comment.employee ? `${comment.employee.firstName} ${comment.employee.lastName}` : "Anonymous";
-  const dateSpan = document.createElement("span");
-  dateSpan.textContent = new Date(comment.created_at).toLocaleString();
+  authorSpan.textContent = comment.author_nickname;
+  const authorAvatar = document.createElement("img");
+  authorAvatar.alt = comment.author_nickname;
+  authorAvatar.src = comment.author_avatar;
+  authorAvatar.className = "author-avatar";
+  metaDiv.appendChild(authorAvatar);
   metaDiv.appendChild(authorSpan);
-  metaDiv.appendChild(dateSpan);
 
   // Comment actions
   const actionsDiv = document.createElement("div");
@@ -200,8 +202,8 @@ function createCommentElement(comment) {
   }
 
   // Assemble comment
-  commentDiv.appendChild(contentDiv);
   commentDiv.appendChild(metaDiv);
+  commentDiv.appendChild(contentDiv);
   commentDiv.appendChild(actionsDiv);
   commentDiv.appendChild(replyArea);
   commentDiv.appendChild(repliesList);
