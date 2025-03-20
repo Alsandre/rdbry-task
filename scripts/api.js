@@ -88,7 +88,7 @@ export async function fetchComments(taskId) {
     if (!response.ok) throw new Error(`Error fetching comments for task ${taskId}: ${response.status}`);
     return await response.json();
   } catch (error) {
-    console.error(error);
+    console.error("Error fetching comments:", error);
     return [];
   }
 }
@@ -143,15 +143,18 @@ export async function createComment(taskId, commentData) {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
+        Accept: "application/json",
         "Content-Type": "application/json",
       },
       body: JSON.stringify(commentData),
     });
-    if (!response.ok) throw new Error(`Error creating comment for task ${taskId}: ${response.status}`);
+    if (!response.ok) {
+      throw new Error("Failed to create comment");
+    }
     return await response.json();
   } catch (error) {
-    console.error(error);
-    return null;
+    console.error("Error creating comment:", error);
+    throw error;
   }
 }
 

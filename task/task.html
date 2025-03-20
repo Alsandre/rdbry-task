@@ -6,8 +6,8 @@
     <title>Task Details</title>
     <link rel="stylesheet" href="task.css" />
     <!-- Load header and modal components -->
-    <script src="components/header-component.js" type="module"></script>
-    <script src="components/employee-modal.js" type="module"></script>
+    <script src="../components/headerComponent.js" type="module"></script>
+    <script src="../components/employeeModal.js" type="module"></script>
   </head>
   <body>
     <!-- Include reusable header -->
@@ -43,9 +43,14 @@
       </section>
       <section class="task-comments">
         <h2>კომენტარები</h2>
+        <!-- New Comment Input Area -->
+        <div class="new-comment-area">
+          <textarea id="newCommentInput" placeholder="დაწერეთ კომენტარი..."></textarea>
+          <button id="submitComment" class="submit-btn">დამატება</button>
+        </div>
+        <!-- Comments List Container -->
         <div class="comments-container">
-          <!-- Comments will be loaded dynamically; placeholder for now -->
-          <p>კომენტარების ნაწილი მყარად იდენტიფიცირდება დავალების სისტემასთან. (Placeholder)</p>
+          <!-- Comments will be loaded dynamically here -->
         </div>
       </section>
     </main>

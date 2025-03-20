@@ -5,7 +5,7 @@ export function createTaskCard(task) {
 
   // On click, redirect to task preview page with task ID in URL
   card.addEventListener("click", () => {
-    window.location.href = `task.html?id=${task.id}`;
+    window.location.href = `/task/task.html?id=${task.id}`;
   });
 
   // --- Row 1: Priority, Department, Due Date ---
@@ -77,7 +77,7 @@ export function createTaskCard(task) {
   return card;
 }
 
-function formatDueDate(date) {
+export function formatDueDate(date) {
   // Format: "Monday - dd/mm/yyyy"
   const weekday = date.toLocaleDateString("en-US", { weekday: "long" });
   const dd = String(date.getDate()).padStart(2, "0");

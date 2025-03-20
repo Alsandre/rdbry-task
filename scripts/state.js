@@ -8,6 +8,7 @@ class AppState {
       employees: [],
       filters: {},
       statuses: [],
+      comments: [],
       // Add additional state properties as needed
     };
 
