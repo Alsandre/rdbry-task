@@ -30,7 +30,8 @@ export function createTaskCard(task) {
   // Department label (as a pill)
   const deptPill = document.createElement("span");
   deptPill.className = "department-pill";
-  deptPill.textContent = task.department.name; // assuming string
+  const truncated = truncateDepName(task.department.name);
+  deptPill.textContent = truncated;
   deptPill.style.backgroundColor = getDepartmentColor(task.department.id);
   row1Left.appendChild(priorityPill);
   row1Left.appendChild(deptPill);
@@ -155,4 +156,29 @@ export function getDepartmentColor(departmentId) {
   // We'll use modulo to ensure we always get the same color for the same ID
   const colorIndex = departmentId % colors.length;
   return colors[colorIndex];
+}
+
+export function truncateDepName(depName) {
+  if (depName.length <= 11) return depName;
+  const maxLen = 10;
+  const words = depName.split(" ").filter((word) => word.length > 0);
+
+  if (words.length === 0) return "";
+
+  if (words.length === 1) {
+    return words[0].slice(0, maxLen);
+  }
+
+  let result = "";
+  for (let i = 0; i < words.length; i++) {
+    const fragment = words[i].slice(0, 3) + ".";
+    const candidate = result ? result + " " + fragment : fragment;
+    if (candidate.length + 1 > maxLen) {
+      break;
+    } else {
+      result = candidate;
+    }
+  }
+
+  return result;
 }

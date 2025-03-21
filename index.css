@@ -154,9 +154,12 @@
   font-size: 12px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   border-radius: 15px;
   overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 0 9px;
 }
 
 /* Row 2: Title and description */
