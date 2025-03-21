@@ -13,9 +13,7 @@ class AppHeader extends HTMLElement {
         <style>
           :host {
             display: block;
-            background: #f4f4f4;
             padding: 1rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
           }
           .header-container {
             display: flex;
@@ -34,7 +32,7 @@ class AppHeader extends HTMLElement {
             text-decoration: none;
             cursor: pointer;
             border-radius: 4px;
-            transition: background 0.3s ease;
+            background: none;
           }
           .actions a {
             background: #8338EC;
@@ -47,13 +45,23 @@ class AppHeader extends HTMLElement {
           .actions a:hover {
             background: #0056b3;
           }
+          .create-task-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+          }
+          .actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+          }
         </style>
         <header class="header">
           <div class="header-container">
-            <a href="/index.html" class="logo">Logo - Here</a>
+            <a href="/index.html" class="logo"><img src="/assets/logo.png" width="210" alt="logo" /></a>
             <div class="actions">
               <button id="createEmployeeBtn">თანამშრომლის შექმნა</button>
-              <a href="/create-task/create-task.html">შექმენი ახალი დავალება</a>
+                <a href="/create-task/create-task.html" class="create-task-btn"> <img src="/assets/white-plus.png" alt="white-plus" /> შექმენი ახალი დავალება</a>
             </div>
           </div>
         </header>
