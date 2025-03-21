@@ -93,12 +93,44 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   // Update employee dropdown based on selected department
-  departmentSelect.addEventListener("change", selectEmployee());
+  departmentSelect.addEventListener("change", () => {
+    // Clear current employee selection
+    currentEmployee = null;
+    employeeInput.value = "";
+    const selectedValue = customSelect.querySelector(".selected-value");
+    selectedValue.innerHTML = '<span class="placeholder">აირჩიე თანამშრომელი</span>';
+
+    // Enable/disable employee selection based on department selection
+    if (departmentSelect.value) {
+      customSelect.classList.remove("disabled");
+      renderEmployeeOptions();
+    } else {
+      customSelect.classList.add("disabled");
+      optionsContainer.innerHTML = "";
+    }
+  });
 
   // Function to render employee options in dropdown
   function renderEmployeeOptions() {
     optionsContainer.innerHTML = "";
-    window.allEmployees.forEach((emp) => {
+
+    // Get selected department ID
+    const selectedDepartmentId = parseInt(departmentSelect.value);
+
+    // Filter employees by department
+    const departmentEmployees = window.allEmployees.filter((emp) => emp.department.id === selectedDepartmentId);
+
+    // If no employees for selected department, show only "Add New" option
+    if (departmentEmployees.length === 0) {
+      const addNewOption = document.createElement("div");
+      addNewOption.className = "dropdown-option add-new";
+      addNewOption.textContent = "+ დაამატე ახალი თანამშრომელი";
+      optionsContainer.appendChild(addNewOption);
+      return;
+    }
+
+    // Render filtered employees
+    departmentEmployees.forEach((emp) => {
       const option = document.createElement("div");
       option.className = "dropdown-option";
       // Create avatar element
@@ -142,6 +174,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // Function to open dropdown
   function openDropdown() {
+    // Don't open if no department is selected
+    if (!departmentSelect.value) {
+      return;
+    }
     renderEmployeeOptions();
     dropdown.hidden = false;
     customSelect.classList.add("expanded");

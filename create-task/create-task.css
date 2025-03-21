@@ -70,16 +70,26 @@
 
 /* Custom select collapsed state */
 .custom-select {
-  width: 550px;
-  height: 45px;
-  border: 1px solid grey;
-  border-radius: 5px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 10px;
-  cursor: pointer;
   position: relative;
+  width: 100%;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #fff;
+}
+
+.custom-select.disabled {
+  background-color: #f8f9fa;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.custom-select.disabled .selected-value {
+  color: #6c757d;
+}
+
+.custom-select.disabled .arrow {
+  opacity: 0.5;
 }
 
 .custom-select .selected-value {
@@ -107,7 +117,7 @@
 
 /* Expanded state: border changes and arrow rotates */
 .custom-select.expanded {
-  border-color: #8338EC;
+  border-color: #8338ec;
 }
 .custom-select.expanded .arrow-icon {
   transform: rotate(180deg);
@@ -117,7 +127,7 @@
 .custom-select-dropdown {
   width: 550px;
   max-height: 250px;
-  border: 1px solid #8338EC;
+  border: 1px solid #8338ec;
   border-top: none;
   overflow-y: auto;
   position: absolute;
@@ -145,7 +155,7 @@
 /* Option: "add new" styling */
 .custom-select-dropdown .dropdown-option.add-new {
   font-weight: bold;
-  color: #8338EC;
+  color: #8338ec;
 }
 
 /* Employee option: render avatar + name */
