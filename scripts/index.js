@@ -1,6 +1,6 @@
 import { fetchStatuses, fetchDepartments, fetchEmployees, fetchPriorities, fetchTasks } from "./api.js";
 import { storageService } from "./storage.js";
-import { createTaskCard } from "./utils.js";
+import { createTaskCard, getStatusColor } from "./utils.js";
 import { appState } from "./state.js";
 
 let currentFilters = storageService.getFilters() || {
@@ -49,8 +49,6 @@ function renderDashboard(statuses, tasks) {
   // Set container styles to support horizontal scrolling when many columns exist
   container.style.display = "flex";
   container.style.overflowX = "auto";
-  container.style.gap = "1rem";
-  container.style.padding = "1rem";
 
   statuses.forEach((currentStatus) => {
     // Create a column element for each status
@@ -60,8 +58,9 @@ function renderDashboard(statuses, tasks) {
 
     // Create and add the column header (status name)
     const header = document.createElement("h2");
-    header.textContent = currentStatus.name; // Ensure your status objects have a 'name'
-    header.style.textAlign = "center";
+    header.textContent = currentStatus.name;
+    header.style.backgroundColor = getStatusColor(currentStatus.name);
+    header.className = "task-column-header";
     column.appendChild(header);
 
     // Filter tasks that belong to the current status

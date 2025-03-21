@@ -1,3 +1,8 @@
+.wrapper {
+  width: 88%;
+  margin: 0 auto;
+  padding: 40px 0;
+}
 .header {
   background-color: #f4f4f4;
   padding: 1rem;
@@ -7,43 +12,59 @@
 .dashboard {
   display: flex;
   gap: 1rem;
-  padding: 1rem;
 }
 .task-columns {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 1rem;
+  gap: 52px;
 }
 .task-column {
-  background-color: #eaeaea;
-  padding: 1rem;
+  width: 381px;
   min-height: 300px;
+}
+.task-column-header {
+  width: 381px;
+  height: 54px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  font-size: 20px;
+  font-weight: 400;
 }
 
 /* Filters section container */
 .filters {
   display: flex;
-  gap: 1rem;
-  padding: 1rem;
+  width: 688px;
+  height: 44px;
+  border-radius: 10px;
+  justify-content: space-between;
+  border: 1px solid #dee2e6;
+  padding: 0 15px;
 }
 
 /* Each filter container */
 .filters .filter {
-  flex: 1;
-  padding: 0.5rem;
-  border: 1px solid #ccc;
+  width: 200px;
   cursor: pointer;
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
 }
 
 /* Filter pills container */
 .filter-pills {
   width: 100%;
-  padding: 0.5rem 1rem;
+  height: 80px;
   display: flex;
+  justify-content: flex-start;
+  align-items: center;
   flex-wrap: wrap;
-  gap: 0.5rem;
-  background: #f9f9f9;
+  gap: 8px;
 }
 
 /* Individual pill styling */

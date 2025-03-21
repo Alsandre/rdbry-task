@@ -13,7 +13,9 @@ class AppHeader extends HTMLElement {
         <style>
           :host {
             display: block;
-            padding: 1rem;
+            width: 88%;
+            margin: 0 auto;
+            padding: 30px 0;
           }
           .header-container {
             display: flex;

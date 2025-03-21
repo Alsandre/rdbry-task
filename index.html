@@ -10,27 +10,33 @@
   </head>
   <body>
     <app-header></app-header>
-    <aside class="filters">
-      <div class="filter" id="departmentFilterContainer">
-        <span>დეპარტამენტი</span>
-      </div>
-      <div class="filter" id="priorityFilterContainer">
-        <span>პრიორიტეტი</span>
-      </div>
-      <div class="filter" id="employeeFilterContainer">
-        <span>თანამშრომელი</span>
-      </div>
-    </aside>
-    <!-- Filter pills container (will wrap if needed) -->
-    <div class="filter-pills"></div>
-    <main class="dashboard">
-      <section class="task-columns">
-        <div class="task-column task-column--todo">To Do</div>
-        <div class="task-column task-column--in-progress">In Progress</div>
-        <div class="task-column task-column--testing">Ready for Testing</div>
-        <div class="task-column task-column--done">Completed</div>
-      </section>
-    </main>
+    <div class="wrapper">
+      <h2>დავალებების გვერდი</h2>
+      <aside class="filters">
+        <div class="filter" id="departmentFilterContainer">
+          <span>დეპარტამენტი</span>
+          <img src="/assets/chevron-down.png" alt="chevron-down" class="chevron" />
+        </div>
+        <div class="filter" id="priorityFilterContainer">
+          <span>პრიორიტეტი</span>
+          <img src="/assets/chevron-down.png" alt="chevron-down" class="chevron" />
+        </div>
+        <div class="filter" id="employeeFilterContainer">
+          <span>თანამშრომელი</span>
+          <img src="/assets/chevron-down.png" alt="chevron-down" class="chevron" />
+        </div>
+      </aside>
+      <!-- Filter pills container (will wrap if needed) -->
+      <div class="filter-pills"></div>
+      <main class="dashboard">
+        <section class="task-columns">
+          <div class="task-column task-column--todo">To Do</div>
+          <div class="task-column task-column--in-progress">In Progress</div>
+          <div class="task-column task-column--testing">Ready for Testing</div>
+          <div class="task-column task-column--done">Completed</div>
+        </section>
+      </main>
+    </div>
     <employee-modal></employee-modal>
     <script src="scripts/index.js" type="module"></script>
   </body>

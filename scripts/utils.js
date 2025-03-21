@@ -85,3 +85,18 @@ export function formatDueDate(date) {
   const yyyy = date.getFullYear();
   return `${weekday} - ${dd}/${mm}/${yyyy}`;
 }
+
+export function getStatusColor(status) {
+  switch (status) {
+    case "დასაწყები":
+      return "#F7BC30";
+    case "პროგრესში":
+      return "#FB5607";
+    case "მზად ტესტირებისთვის":
+      return "#FF006E";
+    case "დასრულებული":
+      return "#3A86FF";
+    default:
+      return "#8338EC";
+  }
+}
