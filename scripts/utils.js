@@ -2,6 +2,7 @@ export function createTaskCard(task) {
   const card = document.createElement("div");
   card.className = "task-card";
   card.style.cursor = "pointer";
+  card.style.border = `1px solid ${getStatusColor(task.status.name)}`;
 
   // On click, redirect to task preview page with task ID in URL
   card.addEventListener("click", () => {
@@ -15,12 +16,20 @@ export function createTaskCard(task) {
   const row1Left = document.createElement("div");
   row1Left.className = "row1-left";
   // Priority pill
-  const priorityPill = document.createElement("span");
-  priorityPill.className = "pill priority-pill";
-  priorityPill.textContent = task.priority.name; // assuming string
+  const priorityPill = document.createElement("div");
+  priorityPill.className = "priority-pill";
+  const priorityImg = document.createElement("img");
+  priorityImg.src = task.priority.icon;
+  priorityImg.alt = task.priority.name;
+  priorityPill.appendChild(priorityImg);
+  const priorityName = document.createElement("span");
+  priorityName.textContent = task.priority.name;
+  priorityPill.appendChild(priorityName);
+  priorityPill.style.border = `1px solid ${getPriorityColor(task.priority.name)}`;
+  priorityPill.style.color = getPriorityColor(task.priority.name);
   // Department label (as a pill)
   const deptPill = document.createElement("span");
-  deptPill.className = "pill department-pill";
+  deptPill.className = "department-pill";
   deptPill.textContent = task.department.name; // assuming string
   row1Left.appendChild(priorityPill);
   row1Left.appendChild(deptPill);
@@ -28,7 +37,7 @@ export function createTaskCard(task) {
   const row1Right = document.createElement("div");
   row1Right.className = "row1-right";
   const dueDate = new Date(task.due_date);
-  row1Right.textContent = formatDueDate(dueDate);
+  row1Right.textContent = formatDueDateCard(dueDate);
 
   row1.appendChild(row1Left);
   row1.appendChild(row1Right);
@@ -64,7 +73,13 @@ export function createTaskCard(task) {
   row3Right.className = "row3-right";
   // Assume task.commentsCount holds the number of comments
   const commentsCount = task.commentsCount !== undefined ? task.commentsCount : 0;
-  row3Right.textContent = `${commentsCount} კომენტარი`; // "comments" in Georgian
+  const commentIcon = document.createElement("img");
+  commentIcon.src = "./assets/comment-icon.png";
+  commentIcon.alt = "comment";
+  row3Right.appendChild(commentIcon);
+  const commentCount = document.createElement("span");
+  commentCount.textContent = commentsCount;
+  row3Right.appendChild(commentCount);
 
   row3.appendChild(row3Left);
   row3.appendChild(row3Right);
@@ -85,6 +100,16 @@ export function formatDueDate(date) {
   const yyyy = date.getFullYear();
   return `${weekday} - ${dd}/${mm}/${yyyy}`;
 }
+export function formatDueDateCard(date) {
+  // Georgian abbreviated months
+  const georgianMonths = ["იანვ", "თებ", "მარტ", "აპრ", "მაის", "ივნ", "ივლ", "აგვ", "სექტ", "ოქტ", "ნოე", "დეკ"];
+
+  const day = date.getDate();
+  const monthAbbrev = georgianMonths[date.getMonth()];
+  const year = date.getFullYear();
+
+  return `${day} ${monthAbbrev}, ${year}`;
+}
 
 export function getStatusColor(status) {
   switch (status) {
@@ -96,6 +121,18 @@ export function getStatusColor(status) {
       return "#FF006E";
     case "დასრულებული":
       return "#3A86FF";
+    default:
+      return "#8338EC";
+  }
+}
+export function getPriorityColor(priority) {
+  switch (priority) {
+    case "მაღალი":
+      return "#FA4D4D";
+    case "დაბალი":
+      return "#08A508";
+    case "საშუალო":
+      return "#FFBE0B";
     default:
       return "#8338EC";
   }
