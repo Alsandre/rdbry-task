@@ -31,110 +31,186 @@ class EmployeeModal extends HTMLElement {
         .modal {
           position: relative;
           background: #fff;
-          padding: 1.5rem;
-          border-radius: 8px;
-          width: 400px;
-          max-width: 90%;
+          width: 913px;
+          height: 766px;
+          padding: 117px 50px 50px 50px;
           z-index: 1001;
           box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
+        .close-btn {
+          position: absolute;
+          top: 50px;
+          right: 50px;
+          background: none;
+          border: none;
+          font-size: 24px;
+          cursor: pointer;
+          color: #333;
+        }
         h2 {
-          margin-top: 0;
+          text-align: center;
+          margin-bottom: 45px;
         }
         .form-group {
-          margin-bottom: 1rem;
+          margin-bottom: 45px;
         }
         .form-group label {
           display: block;
           font-weight: bold;
-          margin-bottom: 0.3rem;
+          margin-bottom: 8px;
+        }
+        .name-row {
+          display: flex;
+          gap: 45px;
+        }
+        .name-field {
+          flex: 1;
         }
         .form-group input[type="text"],
         .form-group input[type="file"],
         .form-group select {
           width: 100%;
-          padding: 0.5rem;
+          padding: 12px;
           box-sizing: border-box;
+          border: 1px solid #ddd;
+          border-radius: 4px;
         }
-        .hint {
-          font-size: 0.8rem;
+        .form-group input[type="file"] {
+          height: 120px;
+          padding: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: #fff;
+          border: 2px dotted #ddd;
+          cursor: pointer;
+          position: relative;
+          color: transparent;
+        }
+        .form-group input[type="file"]::-webkit-file-upload-button {
+          display: none;
+        }
+        .file-upload-text {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
           color: #666;
         }
-        .error-message {
-          font-size: 0.8rem;
-          color: red;
+        .file-upload-text.hidden {
+          display: none;
         }
-        /* Avatar preview */
+        .hint {
+          font-size: 14px;
+          color: #666;
+          margin-top: 4px;
+        }
+        .error-message {
+          font-size: 14px;
+          color: red;
+          margin-top: 4px;
+        }
         .avatar-preview {
-          margin-top: 0.5rem;
-          position: relative;
-          width: 100px;
-          height: 100px;
+          width: 88px;
+          height: 88px;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 50%;
+          overflow: hidden;
         }
         .avatar-preview img {
-          width: 100px;
-          height: 100px;
+          width: 100%;
+          height: 100%;
           object-fit: cover;
-          border-radius: 50%;
-          border: 1px solid #ccc;
         }
         .avatar-preview button {
           position: absolute;
-          top: -10px;
-          right: -10px;
+          top: 4px;
+          right: 4px;
           background: #e74c3c;
           color: #fff;
           border: none;
           border-radius: 50%;
-          width: 24px;
-          height: 24px;
+          width: 20px;
+          height: 20px;
           cursor: pointer;
+          z-index: 1;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 14px;
         }
         .actions {
-          text-align: right;
+          position: absolute;
+          bottom: 50px;
+          right: 50px;
+          display: flex;
+          gap: 22px;
         }
         .actions button {
-          margin-left: 0.5rem;
-          padding: 0.5rem 1rem;
+          padding: 12px 24px;
           border: none;
-          background: #007bff;
-          color: #fff;
-          cursor: pointer;
           border-radius: 4px;
+          cursor: pointer;
+          font-size: 16px;
         }
-        .actions button:hover {
-          background: #0056b3;
+        #cancelBtn {
+          background: none;
+          border: 1px solid #8338EC;
+          color: #8338EC;
+        }
+        #submitBtn {
+          background: #8338EC;
+          color: #fff;
+        }
+        #submitBtn:hover {
+          background: #6a2bc4;
+        }
+        #cancelBtn:hover {
+          background: #f5f5f5;
+        }
+        #department {
+          width: 384px;
         }
       </style>
       <div class="backdrop"></div>
       <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <button class="close-btn" id="closeBtn">×</button>
         <h2 id="modalTitle">თანამშრომლის შექმნა</h2>
         <form id="employeeForm" novalidate>
-          <!-- First Name -->
           <div class="form-group">
-            <label for="firstName">სახელი <span>*</span></label>
-            <input type="text" id="firstName" name="firstName" required minlength="2" maxlength="255" pattern="^[A-Za-z\u10A0-\u10FF]+$" />
-            <div class="hint">მინიმუმ 2 სიმბოლო, მაქსიმუმ 255 სიმბოლო</div>
-            <div class="error-message" id="firstNameError"></div>
+            <div class="name-row">
+              <div class="name-field">
+                <label for="firstName">სახელი <span>*</span></label>
+                <input type="text" id="firstName" name="firstName" required minlength="2" maxlength="255" pattern="^[A-Za-z\u10A0-\u10FF]+$" />
+                <div class="hint">მინიმუმ 2 სიმბოლო</div>
+                <div class="hint">მაქსიმუმ 255 სიმბოლო</div>
+                <div class="error-message" id="firstNameError"></div>
+              </div>
+              <div class="name-field">
+                <label for="lastName">გვარი <span>*</span></label>
+                <input type="text" id="lastName" name="lastName" required minlength="2" maxlength="255" pattern="^[A-Za-z\u10A0-\u10FF]+$" />
+                <div class="hint">მინიმუმ 2 სიმბოლო</div>
+                <div class="hint">მაქსიმუმ 255 სიმბოლო</div>
+                <div class="error-message" id="lastNameError"></div>
+              </div>
+            </div>
           </div>
-          <!-- Last Name -->
           <div class="form-group">
-            <label for="lastName">გვარი <span>*</span></label>
-            <input type="text" id="lastName" name="lastName" required minlength="2" maxlength="255" pattern="^[A-Za-z\u10A0-\u10FF]+$" />
-            <div class="hint">მინიმუმ 2 სიმბოლო, მაქსიმუმ 255 სიმბოლო</div>
-            <div class="error-message" id="lastNameError"></div>
-          </div>
-          <!-- Avatar Upload -->
-          <div class="form-group">
-            <label for="avatar">Avatar <span>*</span></label>
+            <label for="avatar">ავატარი <span>*</span></label>
             <input type="file" id="avatar" name="avatar" accept="image/*" required />
+            <div class="file-upload-text">ატვირთე ფოტო</div>
             <div class="avatar-preview" id="avatarPreviewContainer" hidden>
               <img id="avatarPreview" alt="Avatar Preview" />
               <button type="button" id="removeAvatar" title="Remove">×</button>
             </div>
             <div class="error-message" id="avatarError"></div>
           </div>
-          <!-- Department -->
           <div class="form-group">
             <label for="department">განყოფილება <span>*</span></label>
             <select id="department" name="department" required>
@@ -144,7 +220,7 @@ class EmployeeModal extends HTMLElement {
           </div>
           <div class="actions">
             <button type="button" id="cancelBtn">გაუქმება</button>
-            <button type="submit" id="submitBtn">შექმნა</button>
+            <button type="submit" id="submitBtn">დაამატე თანამშრომელი</button>
           </div>
         </form>
       </div>
@@ -154,6 +230,7 @@ class EmployeeModal extends HTMLElement {
   connectedCallback() {
     // Event listeners for backdrop click and Escape key
     this.shadowRoot.querySelector(".backdrop").addEventListener("click", () => this.close());
+    this.shadowRoot.querySelector("#closeBtn").addEventListener("click", () => this.close());
     document.addEventListener("keydown", this._handleEscape.bind(this));
 
     // Form and input elements
@@ -198,13 +275,12 @@ class EmployeeModal extends HTMLElement {
 
   // Public method to open the modal
   open(context = "nav") {
-    this._context = context; // Set context: 'nav' or 'task'
+    this._context = context;
     this.classList.add("open");
-    // Reset form and clear previous errors
     this.form.reset();
     this._clearErrors();
     this.avatarPreviewContainer.hidden = true;
-    // Focus on first field
+    this.shadowRoot.querySelector(".file-upload-text").classList.remove("hidden");
     this.firstNameInput.focus();
   }
 
@@ -236,6 +312,8 @@ class EmployeeModal extends HTMLElement {
   _handleAvatarChange(e) {
     const file = this.avatarInput.files[0];
     this.avatarError.textContent = "";
+    const fileUploadText = this.shadowRoot.querySelector(".file-upload-text");
+
     if (file) {
       if (!file.type.startsWith("image/")) {
         this.avatarError.textContent = "მხოლოდ სურათის ფორმატი";
@@ -252,14 +330,18 @@ class EmployeeModal extends HTMLElement {
       const imgUrl = URL.createObjectURL(file);
       this.avatarPreviewImg.src = imgUrl;
       this.avatarPreviewContainer.hidden = false;
+      fileUploadText.classList.add("hidden");
     } else {
       this.avatarPreviewContainer.hidden = true;
+      fileUploadText.classList.remove("hidden");
     }
   }
 
   _removeAvatar() {
     this.avatarInput.value = "";
     this.avatarPreviewContainer.hidden = true;
+    this.shadowRoot.querySelector(".file-upload-text").classList.remove("hidden");
+    this.avatarError.textContent = "";
   }
 
   _clearErrors() {
