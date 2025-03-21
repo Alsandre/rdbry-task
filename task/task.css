@@ -173,8 +173,13 @@
 
 /* Replies List */
 .replies-list {
-  margin-left: 1rem;
+  margin-left: 20px;
   margin-top: 0.5rem;
   border-left: 2px solid #eee;
   padding-left: 1rem;
+}
+
+/* Reply styling */
+.comment[data-parent-id] {
+  margin-left: 20px;
 }

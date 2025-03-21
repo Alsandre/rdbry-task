@@ -112,7 +112,7 @@ function renderComments(comments) {
   const sortedComments = [...comments].sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 
   sortedComments.forEach((comment) => {
-    console.log(comment)
+    console.log(comment);
     const commentElement = createCommentElement(comment);
     container.appendChild(commentElement);
   });
@@ -143,59 +143,63 @@ function createCommentElement(comment) {
   // Comment actions
   const actionsDiv = document.createElement("div");
   actionsDiv.className = "comment-actions";
-  const replyBtn = document.createElement("button");
-  replyBtn.className = "reply-btn";
-  replyBtn.textContent = "უპასუხე";
-  replyBtn.addEventListener("click", () => toggleReplyArea(commentDiv));
-  actionsDiv.appendChild(replyBtn);
 
-  // Reply area (initially hidden)
-  const replyArea = document.createElement("div");
-  replyArea.className = "reply-area";
-  replyArea.style.display = "none";
-  const replyTextarea = document.createElement("textarea");
-  replyTextarea.placeholder = "დაწერეთ პასუხი...";
-  const submitReplyBtn = document.createElement("button");
-  submitReplyBtn.className = "submit-btn";
-  submitReplyBtn.textContent = "პასუხის გაგზავნა";
-  submitReplyBtn.disabled = true;
+  // Only show reply button for top-level comments (parent_id is null)
+  if (comment.parent_id === null) {
+    const replyBtn = document.createElement("button");
+    replyBtn.className = "reply-btn";
+    replyBtn.textContent = "უპასუხე";
+    replyBtn.addEventListener("click", () => toggleReplyArea(commentDiv));
+    actionsDiv.appendChild(replyBtn);
 
-  // Handle reply submission
-  submitReplyBtn.addEventListener("click", async () => {
-    const replyContent = replyTextarea.value.trim();
-    if (!replyContent) return;
+    // Reply area (initially hidden)
+    const replyArea = document.createElement("div");
+    replyArea.className = "reply-area";
+    replyArea.style.display = "none";
+    const replyTextarea = document.createElement("textarea");
+    replyTextarea.placeholder = "დაწერეთ პასუხი...";
+    const submitReplyBtn = document.createElement("button");
+    submitReplyBtn.className = "submit-btn";
+    submitReplyBtn.textContent = "პასუხის გაგზავნა";
+    submitReplyBtn.disabled = true;
 
-    try {
-      console.log(replyContent, comment.id)
-      const newReply = await createComment(currentTaskId, {
-        text: replyContent,
-        parent_id: comment.id,
-      });
-      if (newReply) {
-        // Refresh comments
-        const comments = await fetchComments(currentTaskId);
-        renderComments(comments);
-        toggleReplyArea(commentDiv); // Hide reply area
+    // Handle reply submission
+    submitReplyBtn.addEventListener("click", async () => {
+      const replyContent = replyTextarea.value.trim();
+      if (!replyContent) return;
+
+      try {
+        const newReply = await createComment(currentTaskId, {
+          text: replyContent,
+          parent_id: comment.id,
+        });
+        if (newReply) {
+          // Refresh comments
+          const comments = await fetchComments(currentTaskId);
+          renderComments(comments);
+          toggleReplyArea(commentDiv); // Hide reply area
+        }
+      } catch (error) {
+        console.error("Error creating reply:", error);
+        alert("Failed to create reply.");
       }
-    } catch (error) {
-      console.error("Error creating reply:", error);
-      alert("Failed to create reply.");
-    }
-  });
+    });
 
-  // Handle reply textarea input
-  replyTextarea.addEventListener("input", () => {
-    submitReplyBtn.disabled = !replyTextarea.value.trim();
-  });
+    // Handle reply textarea input
+    replyTextarea.addEventListener("input", () => {
+      submitReplyBtn.disabled = !replyTextarea.value.trim();
+    });
 
-  replyArea.appendChild(replyTextarea);
-  replyArea.appendChild(submitReplyBtn);
+    replyArea.appendChild(replyTextarea);
+    replyArea.appendChild(submitReplyBtn);
+    commentDiv.appendChild(replyArea);
+  }
 
   // Replies list (if any)
   const repliesList = document.createElement("div");
   repliesList.className = "replies-list";
-  if (comment.replies && comment.replies.length > 0) {
-    comment.replies.forEach((reply) => {
+  if (comment.sub_comments && comment.sub_comments.length > 0) {
+    comment.sub_comments.forEach((reply) => {
       const replyElement = createCommentElement(reply);
       repliesList.appendChild(replyElement);
     });
@@ -205,7 +209,6 @@ function createCommentElement(comment) {
   commentDiv.appendChild(metaDiv);
   commentDiv.appendChild(contentDiv);
   commentDiv.appendChild(actionsDiv);
-  commentDiv.appendChild(replyArea);
   commentDiv.appendChild(repliesList);
 
   return commentDiv;
@@ -226,7 +229,7 @@ function setupCommentHandlers() {
     if (!commentContent) return;
 
     try {
-      console.log(commentContent)
+      console.log(commentContent);
       const newComment = await createComment(currentTaskId, {
         text: commentContent,
         parent_id: null,
