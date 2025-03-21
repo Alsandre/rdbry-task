@@ -63,7 +63,6 @@ export async function fetchDepartments() {
   } catch (error) {
     console.error(error);
     return [];
-    ``;
   }
 }
 

@@ -31,6 +31,7 @@ export function createTaskCard(task) {
   const deptPill = document.createElement("span");
   deptPill.className = "department-pill";
   deptPill.textContent = task.department.name; // assuming string
+  deptPill.style.backgroundColor = getDepartmentColor(task.department.id);
   row1Left.appendChild(priorityPill);
   row1Left.appendChild(deptPill);
 
@@ -136,4 +137,22 @@ export function getPriorityColor(priority) {
     default:
       return "#8338EC";
   }
+}
+
+export function getDepartmentColor(departmentId) {
+  // Define the available colors
+  const colors = [
+    "#FD9A6A", // dep-logistic
+    "#F9D949", // dep-marketing
+    "#89B6FF", // dep-tech
+    "#99FF99", // dep-hr
+    "#A699FF", // dep-it
+    "#FF99CC", // dep-media
+    "#FFCC99", // dep-finance
+  ];
+
+  // Use the department ID to consistently map to a color
+  // We'll use modulo to ensure we always get the same color for the same ID
+  const colorIndex = departmentId % colors.length;
+  return colors[colorIndex];
 }
